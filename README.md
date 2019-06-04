@@ -4,8 +4,7 @@ Jogo da velha desenvolvido durante o segundo semestre(2018), embora se passaram 
 This is a hash game make with C during the second half of the first year of university. The code is really bad, so when I have some time I will upgrade it.
 
 Requerimentos da professora:
-
-                      PROJETO INDIVIDUAL
+                PROJETO INDIVIDUAL
               ENTREGA NO MOODLE ATÉ O DIA 10/09/2018
 O jogo da velha é composto por 2 jogadores, no caso, um dos jogadores será o
 computador (ou melhor o seu programa).
