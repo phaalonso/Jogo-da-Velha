@@ -109,8 +109,11 @@ int v_jogada(char T[][3], int jogada){
             L = 0;
             while(L < 3){
                 if(jogada == 1){
-                    T[C][L] = 'X';
-                    return 1;
+                    if(T[C][L] == ' '){
+                        T[C][L] = 'X';
+                        return 1;
+                    }                       
+                    return -1;
                 }    
                 jogada--;
                 L++;
