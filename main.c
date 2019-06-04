@@ -3,7 +3,7 @@
 //Prototipacao
 void limpar(char T[][l]);
 void tabuleiro(char T[][l]);
-char v_jogada(char T[][l],char jogada);
+int v_jogada(char T[][3], int jogada);
 void computador(char T[][l]);
 int vertical(char T[][l],char ve);
 int horizontal(char T[][l],char ve);
@@ -12,8 +12,8 @@ int fim(char T[][l],char ve);
 int vazio(char T[][l]);
 
 void main(){
-    int jogador, fl,fimo,em,fimx;
-    char T[l][l],jogar,jogada;
+    int jogador, fl,fimo,em,fimx, jogada = 0;
+    char T[l][l],jogar;
 
     srand(time(NULL));
 
@@ -38,9 +38,9 @@ void main(){
                 jogada=' ';
                 printf("\n\nJOGADOR 01 - Escolha uma jogada: ");
                 fflush(stdin);
-                scanf("%c",&jogada);
+                scanf("%d",&jogada);
                 jogada=v_jogada(T,jogada);
-              }while(jogada=='I');
+              }while(jogada==-1);
             }else{///Jogadas do computador e muda o jogador para 1 para proxima repetição
                 computador(T);
                 jogador=1;
@@ -87,88 +87,40 @@ void tabuleiro(char T[][l]){ ///Limpa a tela e imprime o tabuleiro
   printf ("\n============ JOGO DA VELHA ===========");
   printf ("\n======================================");
   printf ("\n=== Tabuleiro ====== Jogo da Velha ===\n");
-  printf ("\n    a | b | c           %c | %c | %c", T[0][0], T[0][1], T[0][2]);
+  printf ("\n    1 | 2 | 3           %c | %c | %c", T[0][0], T[0][1], T[0][2]);
   printf ("\n    __|___|__           __|___|__");
-  printf ("\n    d | e | f           %c | %c | %c", T[1][0], T[1][1], T[1][2]);
+  printf ("\n    4 | 5 | 6           %c | %c | %c", T[1][0], T[1][1], T[1][2]);
   printf ("\n    __|___|__           __|___|__");
-  printf ("\n    g | h | i           %c | %c | %c ", T[2][0], T[2][1], T[2][2]);
+  printf ("\n    7 | 8 | 9           %c | %c | %c ", T[2][0], T[2][1], T[2][2]);
   printf ("\n      |   |               |   |   ");
   printf ("\n\n======================================");
   printf ("\n Jogador 01-> [X]    Computador 02-> [O]");
   printf ("\n======================================");
 }
 
-char v_jogada(char T[][l],char jogada){ /*Recebe a jogada do jogador e determina se ela é valida ou não, junto
-  junto com a estrutura de repetição presente no main realiza a verificação*/
+int v_jogada(char T[][3], int jogada){
+    int C, L = 0;    
 
-  ///A função ira retorar 'I' se a possição inserida pelo usuario ja estiver ocupada
+    if(jogada == 1){
+        T[0][0] = 'X';
+        return 1;
+    }else{
+        while(C < 3){
+            L = 0;
+            while(L < 3){
+                if(jogada == 1){
+                    T[C][L] = 'X';
+                    return 1;
+                }    
+                jogada--;
+                L++;
+            }
+            C++;        
+        }
 
-  switch(jogada) {
-    case 'a':
-        if(T[0][0]==' '){
-          T[0][0] = 'X';
-        }else{
-          jogada='I';
-        }
-        break;
-    case 'b':
-        if(T[0][1]==' '){
-          T[0][1] = 'X';
-        }else{
-          jogada='I';
-        }
-        break;
-    case 'c':
-        if(T[0][2]==' '){
-          T[0][2] = 'X';
-        }else{
-          jogada='I';
-        }
-        break;
-    case 'd':
-        if(T[1][0]==' '){
-          T[1][0] = 'X';
-        }else{
-          jogada='I';
-        }
-        break;
-    case 'e':
-        if(T[1][1]==' '){
-          T[1][1] = 'X';
-        }else{
-          jogada='I';
-        }
-        break;
-    case 'f':
-        if(T[1][2]==' '){
-          T[1][2] = 'X';
-        }else{
-          jogada='I';
-        }
-        break;
-    case 'g':
-        if(T[2][0]==' '){
-          T[2][0] = 'X';
-        }else{
-          jogada='I';
-        }
-        break;
-    case 'h':
-        if(T[2][1]==' '){
-          T[2][1] = 'X';
-        }else{
-          jogada='I';
-        }
-        break;
-    case 'i':
-        if(T[2][2]==' '){
-          T[2][2] = 'X';
-        }else{
-          jogada='I';
-        }
-        break;
-  }
-  return jogada;
+        return -1;
+    }
+
 }
 
 void computador(char T[][3]){
