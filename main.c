@@ -1,6 +1,6 @@
 #include <stdio.h>
 #define l 3
-//Prototipacao
+
 void limpar(char T[][l]);
 void tabuleiro(char T[][l]);
 int v_jogada(char T[][3], int jogada);
@@ -18,84 +18,80 @@ void main(){
     srand(time(NULL));
 
     do{
-      fimo=0;
-      fl=0;
-      jogar='N';
-      printf("Deseja jogar?: ");
-      fflush(stdin); scanf("%c",&jogar);
-      jogar=toupper(jogar);
-      if(jogar=='S'){
-          printf("Quem comecara jogando:\n1-Voce\n2-Computador\n");
-          scanf("%d",&jogador);
-          limpar(T);
+        fimo = 0;
+        fl = 0;
+        printf("Deseja jogar?: ");
+        fflush(stdin); scanf("%c", &jogar);
+        jogar = toupper(jogar);
+        if(jogar == 'S'){
+            printf("Quem comecara jogando:\n1-Voce\n2-Computador\n");
+            scanf("%d", &jogador);
+            limpar(T);
 
-          do{
-            tabuleiro(T); ///Imprime o tabuleiro
+            do{
+                tabuleiro(T); ///Imprime o tabuleiro
 
-            if(jogador==1){
-              jogador=2; ///Deixa pronto pra proxima repetição
-              do{
-                jogada=' ';
-                printf("\n\nJOGADOR 01 - Escolha uma jogada: ");
-                fflush(stdin);
-                scanf("%d",&jogada);
-                jogada=v_jogada(T,jogada);
-              }while(jogada==-1);
-            }else{///Jogadas do computador e muda o jogador para 1 para proxima repetição
-                computador(T);
-                jogador=1;
-            }
+                if(jogador == 1){
+                    do{
+                        jogada = ' ';
+                        printf("\n\nJOGADOR 01 - Escolha uma jogada: ");
+                        fflush(stdin);
+                        scanf("%d", &jogada);
+                        jogada=v_jogada(T, jogada);
+                    }while(jogada == -1);
+                    jogador = 2; ///Deixa pronto pra proxima repetição
+                }else{///Jogadas do computador e muda o jogador para 1 para proxima repetição
+                    computador(T);
+                    jogador=1;
+                }
 
-            ///Recebe valores, para determinar o ganhador
-            fimo=fim(T,'O');  ///Se 1 O ganhou
-            fimx=fim(T,'X');  ///Se 1 X ganhou
-            em=vazio(T); ///Conta os espaços vazios
+                ///Recebe valores, para determinar o ganhador
+                fimo = fim(T,'O');  ///Se 1 O ganhou
+                fimx = fim(T,'X');  ///Se 1 X ganhou
+                em = vazio(T); ///Conta os espaços vazios
 
-            if(fimo==1 || fimx==1 || em==0){
-                fl=1;
-            }
-
-            if(fimo==1){
-                tabuleiro(T);
-                printf("\n\n========== COMPUTADOR GANHOU =========\n");
-            }else if(fimx==1){
-                tabuleiro(T);
-                printf("\n\n============= VOCE GANHOU ============\n");
-            }else if(em==0){
-                tabuleiro(T);
-                printf("\n\n================ EMPATOU =============\n");
-            }
-
-          }while (fl!=1);
-      }
-    }while(jogar!='N');
+                if(fimo==1){
+                    fl =1;
+                    tabuleiro(T);
+                    printf("\n\n========== COMPUTADOR GANHOU =========\n");
+                }else if(fimx==1){
+                    fl =1;
+                    tabuleiro(T);
+                    printf("\n\n============= VOCE GANHOU ============\n");
+                }else if(em==0){
+                    fl =1;
+                    tabuleiro(T);
+                    printf("\n\n================ EMPATOU =============\n");
+                }
+            }while (fl != 1);
+        }
+    }while(jogar != 'N');
 }
 
 void limpar(char T[][l]){ ///Realiza a limpeza do vetor
-  int j,k;
-
-  for(j=0;j<l;j++){
-    for(k=0;k<l;k++){
-      T[j][k]=' ';
+    int j,k;
+    for(j = 0; j < l; j++){
+        for(k = 0; k < l; k++){
+            T[j][k] = ' ';
+        }
     }
-  }
 }
 
 void tabuleiro(char T[][l]){ ///Limpa a tela e imprime o tabuleiro
-  system("cls");
-  printf ("======================================");
-  printf ("\n============ JOGO DA VELHA ===========");
-  printf ("\n======================================");
-  printf ("\n=== Tabuleiro ====== Jogo da Velha ===\n");
-  printf ("\n    1 | 2 | 3           %c | %c | %c", T[0][0], T[0][1], T[0][2]);
-  printf ("\n    __|___|__           __|___|__");
-  printf ("\n    4 | 5 | 6           %c | %c | %c", T[1][0], T[1][1], T[1][2]);
-  printf ("\n    __|___|__           __|___|__");
-  printf ("\n    7 | 8 | 9           %c | %c | %c ", T[2][0], T[2][1], T[2][2]);
-  printf ("\n      |   |               |   |   ");
-  printf ("\n\n======================================");
-  printf ("\n Jogador 01-> [X]    Computador 02-> [O]");
-  printf ("\n======================================");
+    system("cls");
+    printf ("======================================");
+    printf ("\n============ JOGO DA VELHA ===========");
+    printf ("\n======================================");
+    printf ("\n=== Tabuleiro ====== Jogo da Velha ===\n");
+    printf ("\n    1 | 2 | 3           %c | %c | %c", T[0][0], T[0][1], T[0][2]);
+    printf ("\n    __|___|__           __|___|__");
+    printf ("\n    4 | 5 | 6           %c | %c | %c", T[1][0], T[1][1], T[1][2]);
+    printf ("\n    __|___|__           __|___|__");
+    printf ("\n    7 | 8 | 9           %c | %c | %c ", T[2][0], T[2][1], T[2][2]);
+    printf ("\n      |   |               |   |   ");
+    printf ("\n\n======================================");
+    printf ("\n Jogador 01-> [X]    Computador 02-> [O]");
+    printf ("\n======================================");
 }
 
 int v_jogada(char T[][3], int jogada){
@@ -120,7 +116,6 @@ int v_jogada(char T[][3], int jogada){
             }
             C++;        
         }
-
         return -1;
     }
 
@@ -129,10 +124,7 @@ int v_jogada(char T[][3], int jogada){
 void computador(char T[][3]){
     int j,v,aux=0;
 
-    v=vazio(T); ///Verifica se há possições vazias, assim determina se o computador pode realizar uma jogada ou não.
-     ///Evitando ficar preso no loop da jogada aleatória
-
-    if(v!=0){
+    if(vazio(T) !=0){
         if( ///Cima esquerda ####PRIORIZA GANHAR####
            (
             (T[0][1]=='O' && T[0][2]=='O')||
@@ -440,15 +432,12 @@ int fim(char T[][l],char ve){ ///#VE SE O
     h=horizontal(T,ve);
     d=diagonal(T,ve);
 
-    if(v==1){
+    if(v==1)
         f=1;
-    }
-    if(h==1){
+    else if(h==1)
         f=1;
-    }
-    if(d==1){
+    else if(d==1)
         f=1;
-    }
 
     return f;
 }
@@ -456,13 +445,13 @@ int fim(char T[][l],char ve){ ///#VE SE O
 int vertical(char T[][l],char ve){
     int x=0;
 
-    if(T[1][0]==ve && T[2][0]==ve && T[0][0]==ve){ ///Cima esquerda
+    if(T[1][0]==ve && T[2][0]==ve && T[0][0]==ve) ///Cima esquerda
         x=1;
-    }else if(T[1][1]==ve && T[2][1]==ve && T[0][1]==ve){ ///Cima meio
+    else if(T[1][1]==ve && T[2][1]==ve && T[0][1]==ve) ///Cima meio
         x=1;
-    }else if(T[1][2]==ve && T[2][2]==ve && T[0][2]==ve){ ///Cima direita
+    else if(T[1][2]==ve && T[2][2]==ve && T[0][2]==ve) ///Cima direita
         x=1;
-    }
+
 
     return x;
 }
@@ -470,14 +459,13 @@ int vertical(char T[][l],char ve){
 int horizontal(char T[][l],char ve){
     int x=0;
 
-    if(T[0][0]==ve && T[0][1]==ve && T[0][2]==ve){ ///Lado cima
+    if(T[0][0]==ve && T[0][1]==ve && T[0][2]==ve) ///Lado cima
         x=1;
-    }else if(T[1][0]==ve && T[1][1]==ve && T[1][2]==ve){ ///Cima meio
+    else if(T[1][0]==ve && T[1][1]==ve && T[1][2]==ve) ///Cima meio
         x=1;
-    }else if(T[2][0]==ve && T[2][1]==ve && T[2][2]==ve){ ///Cima baixo
+    else if(T[2][0]==ve && T[2][1]==ve && T[2][2]==ve) ///Cima baixo
         x=1;
-    }
-
+    
     return x;
 }
 
@@ -505,7 +493,6 @@ int vazio(char T[][l]){
             }
         }
     }
-
 
     return f;
 }
